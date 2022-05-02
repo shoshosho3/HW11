@@ -1,22 +1,31 @@
 
 public class SnakesAndLaddersGame {
-    private Die die;
+    private final Die die;
     private final int MAX_NUM_OF_PLAYERS = 5;
-    private final int MIN_NUM_OF_PLAYERS = 2;
     private final Player[] players = new Player[MAX_NUM_OF_PLAYERS];
     private int playerNum = 0;
+    private final GameBoard gameBoard;
 
     public SnakesAndLaddersGame(int min, int max) {
         this.die = new Die(min, max);
+        gameBoard = new GameBoard();
     }
 
     public SnakesAndLaddersGame() {
         this(1, 6);
     }
 
+    public String start(){
+        return "";
+    }
+
+    /**
+     * This function initializes the game according to input from user
+     */
     public void initializeGame() {
         System.out.println("Initializing the game...");
         String input;
+        final int MIN_NUM_OF_PLAYERS = 2;
         do {
             input = Main.scanner.nextLine();
             if (input.startsWith("add player")) {
@@ -24,18 +33,24 @@ public class SnakesAndLaddersGame {
             } else if (input.startsWith("add ladder") || input.startsWith("add snake")) {
                 int length = Integer.parseInt(input.split(" ")[2]);
                 int squareNumber = Integer.parseInt(input.split(" ")[3]);
-                if(input.startsWith("add ladder")) {
-                    GameBoard.addLadder(length, squareNumber);
+                if (input.startsWith("add ladder")) {
+                    gameBoard.addLadder(length, squareNumber);
                 } else {
-                    GameBoard.addSnake(length, squareNumber);
+                    gameBoard.addSnake(length, squareNumber);
                 }
-            } else if(input.equals("end") && playerNum < MIN_NUM_OF_PLAYERS) {
+            } else if (input.equals("end") && playerNum < MIN_NUM_OF_PLAYERS) {
                 System.out.println("Cannot start the game, there are less than two players!");
             }
         } while (!input.equals("end") || playerNum < MIN_NUM_OF_PLAYERS);
 
     }
 
+    /**
+     * This function adds player if it is possible
+     * It prints a fitting message if not possible
+     *
+     * @param input input of player
+     */
     void addPlayer(String input) {
         if (playerNum > MAX_NUM_OF_PLAYERS) {
             System.out.println("The maximal number of players is five !");
