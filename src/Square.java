@@ -1,11 +1,12 @@
 public class Square {
-    Ladder ladder;
-    Snake snake;
-
+    Ladder ladder = null;
+    Snake snake = null;
+    int number;
     /**
      * empty constructor
      */
-    public Square() {
+    public Square(int number) {
+        this.number = number;
     }
 
     /**
@@ -35,15 +36,24 @@ public class Square {
      */
     boolean squareEmpty(boolean isLadder) {
         //checking if square has a bottom of a ladder
-        if (ladder != null) {
+        if (haveLadder()) {
             System.out.println("This square " + (isLadder ? "already " : "") + "contains a bottom of a ladder!");
             return false;
         }
         //checking if square has a head of a snake
-        if (snake != null) {
+        if (haveSnake()) {
             System.out.println("This square " + (!isLadder ? "already " : "") + "contains a head of a snake!");
             return false;
         }
         return true;
+    }
+
+    public boolean haveLadder()
+    {
+        return ladder != null;
+    }
+    public boolean haveSnake()
+    {
+        return snake != null;
     }
 }

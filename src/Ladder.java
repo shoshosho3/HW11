@@ -9,4 +9,8 @@ public class Ladder {
     public Ladder(int length) {
         this.length = length;
     }
+
+    public int getLength() {
+        return length;
+    }
 }

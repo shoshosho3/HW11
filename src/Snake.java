@@ -9,4 +9,9 @@ public class Snake {
     public Snake(int length) {
         this.length = length;
     }
+
+    public int getLength()
+    {
+        return length;
+    }
 }

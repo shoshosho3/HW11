@@ -1,13 +1,16 @@
 public class GameBoard {
-    static final int BOARD_SIZE = 100;
+    static final int MAX_SQUARE = 100;
     static final int MIN_SQUARE = 1;
-    static Square[] squares;
+    Square[] squares;
 
     /**
      * constructor, initializes squares
      */
     public GameBoard() {
-        squares = new Square[BOARD_SIZE];
+        squares = new Square[MAX_SQUARE - MIN_SQUARE + 1];
+        for (int i = MIN_SQUARE; i <=MAX_SQUARE; i++) {
+            squares[i-MIN_SQUARE] = new Square(i);
+        }
     }
 
     /**
@@ -37,7 +40,7 @@ public class GameBoard {
     public void addSnake(int length, int squareNumber) {
         if (OutOfBounds(squareNumber)) {
             System.out.println("The square is not within the board's boundaries!");
-        } else if (squareNumber == BOARD_SIZE) {
+        } else if (squareNumber == MAX_SQUARE) {
             System.out.println("You cannot add a snake in the last square!");
         } else if (OutOfBounds(squareNumber - length)) {
             System.out.println("The snake is too long!");
@@ -53,7 +56,7 @@ public class GameBoard {
      * @return true if square number in board bounds, false otherwise
      */
     public boolean OutOfBounds(int squareNumber) {
-        return squareNumber > BOARD_SIZE || squareNumber < MIN_SQUARE;
+        return squareNumber > MAX_SQUARE || squareNumber < MIN_SQUARE;
     }
 
 }

@@ -23,8 +23,15 @@ public class Player {
         this.gamePiece = gamePiece;
     }
 
-    public  String getColor()
-    {
+    public String getColor() {
         return gamePiece.getColor().toString();
+    }
+
+    public int getPlace() {
+        return gamePiece.place;
+    }
+
+    public int move(int steps) {
+        return gamePiece.move(steps);
     }
 }
