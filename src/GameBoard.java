@@ -1,10 +1,19 @@
+/**
+ * This class represents board of the game
+ */
 public class GameBoard {
+
+    //------------------------------------static attributes--------------------------------
     static final int MAX_SQUARE = 100;
     static final int MIN_SQUARE = 1;
+
+    //------------------------------------attributes--------------------------------
     Square[] squares;
 
+    //------------------------------------constructors--------------------------------
+
     /**
-     * constructor, initializes squares
+     * Constructor, initializes squares
      */
     public GameBoard() {
         squares = new Square[MAX_SQUARE - MIN_SQUARE + 1];
@@ -12,6 +21,8 @@ public class GameBoard {
             squares[i-MIN_SQUARE] = new Square(i);
         }
     }
+
+    //------------------------------------public methods--------------------------------
 
     /**
      * This function adds a ladder to square in square number if possible
