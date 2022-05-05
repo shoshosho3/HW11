@@ -1,5 +1,11 @@
+/**
+ * this function represents a snake in the game
+ */
 public class Snake {
-    private final int length;
+    //------------------------------------attribute--------------------------------
+    private final int length;//length of snake
+
+    //------------------------------------constructor--------------------------------
 
     /**
      * constructor
@@ -10,8 +16,12 @@ public class Snake {
         this.length = length;
     }
 
-    public int getLength()
-    {
+    //------------------------------------getter--------------------------------
+
+    /**
+     * @return length of snake
+     */
+    public int getLength() {
         return length;
     }
 }

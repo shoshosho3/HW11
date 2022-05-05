@@ -1,11 +1,11 @@
 /**
- * This class represents a game piece
+ * This class represents a game piece of a player
  */
 public class GamePiece {
 
     //------------------------------------attributes--------------------------------
-    private final Color color;
-    private int currentPlace = GameBoard.MIN_SQUARE;
+    private final Color color;//color of game piece
+    private Square currentSquare = new Square(GameBoard.MIN_SQUARE);//current square of game piece
 
     //------------------------------------constructor--------------------------------
 
@@ -18,7 +18,7 @@ public class GamePiece {
         this.color = color;
     }
 
-    //------------------------------------getters--------------------------------
+    //------------------------------------getters and setters--------------------------------
 
     /**
      *
@@ -33,25 +33,25 @@ public class GamePiece {
      * @return current place of game piece
      */
     public int getCurrentPlace() {
-        return currentPlace;
+        return currentSquare.getPlace();
     }
 
-    //------------------------------------public methods--------------------------------
 
     /**
-     * This function moves game piece from current place to another
+     * This function sets current square to given square
      *
-     * @param steps number of steps forward
+     * @param currentSquare square being set to game piece
      */
-    public void move(int steps) {
-        int nextPlace = currentPlace + steps;
-        if (nextPlace < GameBoard.MIN_SQUARE) {
-            nextPlace = GameBoard.MIN_SQUARE;
-        } else if (nextPlace > GameBoard.MAX_SQUARE) {
-            // MAX_SQUARE - (nextPlace - MAX_SQUARE) = 2*MAX_SQUARE - nextPlace
-            nextPlace = 2 * GameBoard.MAX_SQUARE - nextPlace;
-        }
-        currentPlace = nextPlace;
+    public void setCurrentSquare(Square currentSquare) {
+        this.currentSquare = currentSquare;
+    }
+
+    public boolean onSnake() {
+        return currentSquare.hasSnake();
+    }
+
+    public boolean onLadder() {
+        return currentSquare.hasLadder();
     }
 
 }

@@ -1,5 +1,12 @@
+/**
+ * This class represents a ladder in the game
+ */
 public class Ladder {
-    private final int length;
+
+    //------------------------------------attribute--------------------------------
+    private final int length;//length of ladder
+
+    //------------------------------------constructor--------------------------------
 
     /**
      * constructor
@@ -10,6 +17,11 @@ public class Ladder {
         this.length = length;
     }
 
+    //------------------------------------getter--------------------------------
+
+    /**
+     * @return value of length
+     */
     public int getLength() {
         return length;
     }

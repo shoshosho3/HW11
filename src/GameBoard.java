@@ -1,25 +1,36 @@
 /**
- * This class represents board of the game
+ * This class represents board of a game
  */
 public class GameBoard {
 
     //------------------------------------static attributes--------------------------------
-    static final int MAX_SQUARE = 100;
-    static final int MIN_SQUARE = 1;
+    static final int MAX_SQUARE = 100;//max square index on board
+    static final int MIN_SQUARE = 1;//min square index on board
 
-    //------------------------------------attributes--------------------------------
-    Square[] squares;
+    //------------------------------------attribute--------------------------------
+    private final Square[] squares;//array of squares on board
 
     //------------------------------------constructors--------------------------------
 
     /**
-     * Constructor, initializes squares
+     * Constructor, initializes squares on board
      */
     public GameBoard() {
         squares = new Square[MAX_SQUARE - MIN_SQUARE + 1];
         for (int i = MIN_SQUARE; i <=MAX_SQUARE; i++) {
             squares[i-MIN_SQUARE] = new Square(i);
         }
+    }
+
+    //------------------------------------getter--------------------------------
+
+    /**
+     *
+     * @param place index of wanted square
+     * @return square in index place on board
+     */
+    public Square getSquare(int place) {
+        return squares[place];
     }
 
     //------------------------------------public methods--------------------------------
