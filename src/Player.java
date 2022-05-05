@@ -54,10 +54,20 @@ public class Player {
         gamePiece.setCurrentSquare(currentSquare);
     }
 
+    /**
+     * This function checks if player's game piece is on a head of a snake
+     *
+     * @return true if player's game piece is on a head of a snake, false otherwise
+     */
     public boolean onSnake() {
         return gamePiece.onSnake();
     }
 
+    /**
+     * This function checks if player's game piece is on a bottom of a ladder
+     *
+     * @return true if player's game piece is on a bottom of a ladder, false otherwise
+     */
     public boolean onLadder() {
         return gamePiece.onLadder();
     }

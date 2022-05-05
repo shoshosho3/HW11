@@ -21,7 +21,6 @@ public class GamePiece {
     //------------------------------------getters and setters--------------------------------
 
     /**
-     *
      * @return color of game piece
      */
     public Color getColor() {
@@ -29,7 +28,6 @@ public class GamePiece {
     }
 
     /**
-     *
      * @return current place of game piece
      */
     public int getCurrentPlace() {
@@ -46,10 +44,22 @@ public class GamePiece {
         this.currentSquare = currentSquare;
     }
 
+    //------------------------------------public methods--------------------------------
+
+    /**
+     * This function checks if game piece is on a head of a snake
+     *
+     * @return true if game piece is on a head of a snake, false otherwise
+     */
     public boolean onSnake() {
         return currentSquare.hasSnake();
     }
 
+    /**
+     * This function checks if game piece is on a bottom of a ladder
+     *
+     * @return true if game piece is on a bottom of a ladder, false otherwise
+     */
     public boolean onLadder() {
         return currentSquare.hasLadder();
     }

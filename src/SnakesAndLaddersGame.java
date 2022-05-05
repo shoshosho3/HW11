@@ -6,14 +6,15 @@ public class SnakesAndLaddersGame {
     //------------------------------------constants--------------------------------
     private static final String NO_WINNER_YET = "";
     private static final int MAX_NUM_OF_PLAYERS = 5;
+    private static final int MIN_NUM_OF_PLAYERS = 2;
 
     //------------------------------------attributes--------------------------------
-    private final Die die;
-    private final Player[] players = new Player[MAX_NUM_OF_PLAYERS];
-    private int playerNum = 0;
-    private GameBoard gameBoard;
+    private final Die die;//die of the game
+    private final Player[] players = new Player[MAX_NUM_OF_PLAYERS];//array of players playing game
+    private int playerNum = 0;//number of players in game
+    private GameBoard gameBoard;//game board of the game
 
-
+    //------------------------------------constructors--------------------------------
 
     /**
      * Constructor with parameters of dice range
@@ -34,21 +35,27 @@ public class SnakesAndLaddersGame {
         this(1, 6);
     }
 
+    //------------------------------------public methods--------------------------------
+
     /**
-     * This function sorts players by name
+     * This function initializes the game according to input from user
      */
-    private void sortPlayers() {
-        for (int i = 0; i < playerNum; i++) {
-            for (int j = i; j < playerNum; j++) {
-                if (players[i].getName().compareTo(players[j].getName()) > 0) {
-                    Player temp = players[i];
-                    players[i] = players[j];
-                    players[j] = temp;
-                }
+    public void initializeGame() {
+        String input;
 
+        this.gameBoard = new GameBoard();
+        System.out.println("Initializing the game...");
+        do {
+            input = Main.scanner.nextLine();
+            if (input.startsWith("add")) {
+                addObject(input.substring(4));
+            } else if (input.equals("end") && playerNum < MIN_NUM_OF_PLAYERS) {
+                System.out.println("Cannot start the game, there are less than two players!");
             }
+        } while (!input.equals("end") || playerNum < MIN_NUM_OF_PLAYERS);
 
-        }
+
+        sortPlayers();
     }
 
     /**
@@ -67,97 +74,9 @@ public class SnakesAndLaddersGame {
         return winner;
     }
 
+    //------------------------------------private methods--------------------------------
 
-    /**
-     * This function implements a round of the game
-     *
-     * @return name of winner or "" if there's no winner
-     */
-    private String playRound() {
-        for (int i = 0; i < playerNum; i++) {
-            Player currentPlayer = players[i];
-            firstMove(currentPlayer);
-            if (currentPlayer.getCurrentPlace() == GameBoard.MAX_SQUARE || snakesAndLadders(currentPlayer)) {
-                System.out.println("\n");
-                printPositions();
-                return currentPlayer.getName();
-            }
-            System.out.println();
-        }
-        System.out.println();
-        printPositions();
-        return NO_WINNER_YET;
-    }
-
-    private void firstMove(Player player) {
-        int roll = die.roll();
-        System.out.print(player.getName() + " rolled " + roll + ". The path to the next square: " +
-                player.getCurrentPlace());
-
-        player.setCurrentSquare(gameBoard.getSquare(getNext(player.getCurrentPlace(), roll) - 1));
-        System.out.print(" -> " + player.getCurrentPlace());
-    }
-
-    private boolean snakesAndLadders(Player player) {
-        while (player.onSnake() || player.onLadder()) {
-            int place = player.getCurrentPlace();
-            Square square = gameBoard.getSquare(place - 1);
-            int steps = player.onLadder() ? square.getLadder().getLength() : -1 * square.getSnake().getLength();
-            player.setCurrentSquare(gameBoard.getSquare(getNext(place, steps) - 1));
-            System.out.print(" -> " + player.getCurrentPlace());
-
-            if (player.getCurrentPlace() == GameBoard.MAX_SQUARE) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private int getNext(int currentPlace, int steps) {
-        int provisionalPlace = currentPlace + steps;
-        if (provisionalPlace < GameBoard.MIN_SQUARE) {
-            return GameBoard.MIN_SQUARE;
-        }
-        if (provisionalPlace > GameBoard.MAX_SQUARE) {
-            // MAX_SQUARE - (nextPlace - MAX_SQUARE) = 2*MAX_SQUARE - nextPlace
-            return 2 * GameBoard.MAX_SQUARE - provisionalPlace;
-        }
-        return provisionalPlace;
-    }
-
-    /**
-     * This function prints the positions of players
-     */
-    private void printPositions() {
-        System.out.println("Players positions on the board:");
-
-        for (int i = 0; i < playerNum; i++) {
-            Player p = players[i];
-            System.out.println(p.getName() + " is in square number " + p.getCurrentPlace());
-        }
-    }
-
-    /**
-     * This function initializes the game according to input from user
-     */
-    public void initializeGame() {
-        this.gameBoard = new GameBoard();
-        System.out.println("Initializing the game...");
-        String input;
-
-        final int MIN_NUM_OF_PLAYERS = 2;
-        do {
-            input = Main.scanner.nextLine();
-            if (input.startsWith("add")) {
-                addObject(input.substring(4));
-            } else if (input.equals("end") && playerNum < MIN_NUM_OF_PLAYERS) {
-                System.out.println("Cannot start the game, there are less than two players!");
-            }
-        } while (!input.equals("end") || playerNum < MIN_NUM_OF_PLAYERS);
-
-
-        sortPlayers();
-    }
+    //------------initialization methods------------
 
     /**
      * This function checks input starting with the word "add" and adds to board accordingly
@@ -184,7 +103,7 @@ public class SnakesAndLaddersGame {
      *
      * @param input input of player
      */
-    void addPlayer(String input) {
+    private void addPlayer(String input) {
         if (playerNum >= MAX_NUM_OF_PLAYERS) {
             System.out.println("The maximal number of players is five !");
         } else {
@@ -210,7 +129,7 @@ public class SnakesAndLaddersGame {
      * @param name String of a name of a player
      * @return true if there is already a player with given name, otherwise false
      */
-    boolean isNameUsed(String name) {
+    private boolean isNameUsed(String name) {
         for (Player player : players) {
             if (player != null && player.getName().equals(name)) {
                 return true;
@@ -225,13 +144,121 @@ public class SnakesAndLaddersGame {
      * @param color String of a color of a player
      * @return true if there is already a player with given color, otherwise false
      */
-    boolean isColorUsed(String color) {
+    private boolean isColorUsed(String color) {
         for (Player player : players) {
             if (player != null && player.getColor().equals(color.toUpperCase())) {
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * This function sorts players by name
+     */
+    private void sortPlayers() {
+        for (int i = 0; i < playerNum; i++) {
+            for (int j = i; j < playerNum; j++) {
+                if (players[i].getName().compareTo(players[j].getName()) > 0) {
+                    Player temp = players[i];
+                    players[i] = players[j];
+                    players[j] = temp;
+                }
+
+            }
+
+        }
+    }
+
+    //------------game methods------------
+
+    /**
+     * This function implements a round of the game
+     *
+     * @return name of winner or "" if there's no winner
+     */
+    private String playRound() {
+        for (int i = 0; i < playerNum; i++) {
+            Player currentPlayer = players[i];
+
+            //moves and checking for winner
+            firstMove(currentPlayer);
+            if (currentPlayer.getCurrentPlace() == GameBoard.MAX_SQUARE || snakesAndLadders(currentPlayer)) {
+                System.out.println("\n");
+                printPositions();
+                return currentPlayer.getName();
+            }
+
+            System.out.println();
+        }
+        System.out.println();
+        printPositions();
+        return NO_WINNER_YET;
+    }
+
+    /**
+     * This function moves the player according to die roll
+     *
+     * @param player current player playing his turn
+     */
+    private void firstMove(Player player) {
+        int roll = die.roll();
+        System.out.print(player.getName() + " rolled " + roll + ". The path to the next square: " +
+                player.getCurrentPlace());
+        player.setCurrentSquare(gameBoard.getSquare(getNext(player.getCurrentPlace(), roll) - 1));
+        System.out.print(" -> " + player.getCurrentPlace());
+    }
+
+    /**
+     * This function returns the next index according to given steps and current place
+     *
+     * @param currentPlace current place of a player's game piece
+     * @param steps        amount of steps to next square
+     * @return next index of square
+     */
+    private int getNext(int currentPlace, int steps) {
+        int provisionalPlace = currentPlace + steps;
+        if (provisionalPlace < GameBoard.MIN_SQUARE) {
+            return GameBoard.MIN_SQUARE;
+        }
+        if (provisionalPlace > GameBoard.MAX_SQUARE) {
+            // MAX_SQUARE - (nextPlace - MAX_SQUARE) = 2*MAX_SQUARE - nextPlace
+            return 2 * GameBoard.MAX_SQUARE - provisionalPlace;
+        }
+        return provisionalPlace;
+    }
+
+    /**
+     * This function implements movement of game piece on snakes and ladders in a turn of a player
+     *
+     * @param player current player playing his turn
+     * @return true if the player won, false otherwise
+     */
+    private boolean snakesAndLadders(Player player) {
+        while (player.onSnake() || player.onLadder()) {
+            int place = player.getCurrentPlace();
+            Square square = gameBoard.getSquare(place - 1);
+            int steps = player.onLadder() ? square.getLadder().getLength() : -1 * square.getSnake().getLength();
+            player.setCurrentSquare(gameBoard.getSquare(getNext(place, steps) - 1));
+            System.out.print(" -> " + player.getCurrentPlace());
+
+            if (player.getCurrentPlace() == GameBoard.MAX_SQUARE) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * This function prints the positions of players
+     */
+    private void printPositions() {
+        System.out.println("Players positions on the board:");
+
+        for (int i = 0; i < playerNum; i++) {
+            Player p = players[i];
+            System.out.println(p.getName() + " is in square number " + p.getCurrentPlace());
+        }
     }
 
 }

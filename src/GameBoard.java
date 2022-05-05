@@ -17,15 +17,14 @@ public class GameBoard {
      */
     public GameBoard() {
         squares = new Square[MAX_SQUARE - MIN_SQUARE + 1];
-        for (int i = MIN_SQUARE; i <=MAX_SQUARE; i++) {
-            squares[i-MIN_SQUARE] = new Square(i);
+        for (int i = MIN_SQUARE; i <= MAX_SQUARE; i++) {
+            squares[i - MIN_SQUARE] = new Square(i);
         }
     }
 
     //------------------------------------getter--------------------------------
 
     /**
-     *
      * @param place index of wanted square
      * @return square in index place on board
      */
@@ -71,13 +70,15 @@ public class GameBoard {
         }
     }
 
+    //------------------------------------private method--------------------------------
+
     /**
      * This function checks if given square number is in board bounds
      *
      * @param squareNumber square number being tested
      * @return true if square number in board bounds, false otherwise
      */
-    public boolean OutOfBounds(int squareNumber) {
+    private boolean OutOfBounds(int squareNumber) {
         return squareNumber > MAX_SQUARE || squareNumber < MIN_SQUARE;
     }
 

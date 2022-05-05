@@ -61,13 +61,33 @@ public class Square {
     }
 
     /**
+     * This function checks if square has a ladder
+     *
+     * @return true if square has a ladder
+     */
+    public boolean hasLadder() {
+        return ladder != null;
+    }
+
+    /**
+     * This function checks if square has a snake
+     *
+     * @return true if square has a snake
+     */
+    public boolean hasSnake() {
+        return snake != null;
+    }
+
+    //------------------------------------private method--------------------------------
+
+    /**
      * This function checks if square is empty of snake and ladder
      * If not ot empty a fitting message is printed
      *
      * @param isLadder true if checking for ladder
      * @return true if square empty, otherwise false
      */
-    boolean squareEmpty(boolean isLadder) {
+    private boolean squareEmpty(boolean isLadder) {
 
         //checking if square has a bottom of a ladder
         if (hasLadder()) {
@@ -83,21 +103,5 @@ public class Square {
 
         //square is empty
         return true;
-    }
-
-    /**
-     * This function checks if square has a ladder
-     * @return true if square has a ladder
-     */
-    public boolean hasLadder() {
-        return ladder != null;
-    }
-
-    /**
-     * This function checks if square has a snake
-     * @return true if square has a snake
-     */
-    public boolean hasSnake() {
-        return snake != null;
     }
 }
